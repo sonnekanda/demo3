@@ -1,0 +1,46 @@
+package com.example.demo.services;
+
+import aj.org.objectweb.asm.commons.Remapper;
+import com.example.demo.dto.StudentDtoReq;
+import com.example.demo.dto.StudentDtoRes;
+import com.example.demo.exception.DuplicateEmailException;
+import com.example.demo.mappers.StudentMapper;
+import com.example.demo.models.Student;
+import com.example.demo.repositories.StudentRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class StudentService {
+
+    private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
+
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper){
+        this.studentRepository = studentRepository;
+        this.studentMapper = studentMapper;
+    }
+
+    public Optional<StudentDtoRes> getStudentById(Long id){
+
+        return studentRepository.findById(id)
+                .map(studentMapper::toDto);
+    }
+
+    public List<StudentDtoRes> getAllStudents() {
+
+        return studentRepository.findAll().stream().map(studentMapper::toDto).toList();
+    }
+
+    public StudentDtoRes createStudent(StudentDtoReq studentReq) {
+
+        throw new DuplicateEmailException("Student already exists");
+        //Student student = studentMapper.toEntity(studentReq);
+        //Student savedStudent = studentRepository.save(student);
+        //return studentMapper.toDto(savedStudent);
+        //return new StudentDtoRes();
+
+    }
+}
