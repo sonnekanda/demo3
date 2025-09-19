@@ -4,6 +4,7 @@ import aj.org.objectweb.asm.commons.Remapper;
 import com.example.demo.dto.StudentDtoReq;
 import com.example.demo.dto.StudentDtoRes;
 import com.example.demo.exception.DuplicateEmailException;
+import com.example.demo.exception.InvalidDataException;
 import com.example.demo.mappers.StudentMapper;
 import com.example.demo.models.Student;
 import com.example.demo.repositories.StudentRepository;
@@ -36,11 +37,10 @@ public class StudentService {
 
     public StudentDtoRes createStudent(StudentDtoReq studentReq) {
 
-        throw new DuplicateEmailException("Student already exists");
-        //Student student = studentMapper.toEntity(studentReq);
-        //Student savedStudent = studentRepository.save(student);
-        //return studentMapper.toDto(savedStudent);
-        //return new StudentDtoRes();
+        //throw new InvalidDataException("фывфы");
+        Student student = studentMapper.toEntity(studentReq);
+        Student savedStudent = studentRepository.save(student);
+        return studentMapper.toDto(savedStudent);
 
     }
 }
