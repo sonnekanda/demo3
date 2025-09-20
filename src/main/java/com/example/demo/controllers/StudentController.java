@@ -12,7 +12,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/students/")
+@RequestMapping("/students")
 public class StudentController {
 
     StudentService studentService;
@@ -21,7 +21,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<StudentDtoRes> getStudentById(@PathVariable Long id){
 
         return studentService.getStudentById(id)
@@ -41,13 +41,13 @@ public class StudentController {
     public ResponseEntity<StudentDtoRes> createStudent(@RequestBody StudentDtoReq studentReq) {
         StudentDtoRes createdStudent = studentService.createStudent(studentReq);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("{id}")
+                .path("/{id}")
                 .buildAndExpand(createdStudent.getId())
                 .toUri();
         return ResponseEntity.created(location).body(createdStudent);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<StudentDtoRes> updateStudent(
             @PathVariable Long id,
             @RequestBody @Valid StudentDtoReq studentDtoReq) {
@@ -56,7 +56,7 @@ public class StudentController {
         return ResponseEntity.ok(updatedStudent);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id){
 
         studentService.deleteStudent(id);
