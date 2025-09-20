@@ -25,33 +25,25 @@ public class JwtService {
 
     private SecretKey secretKey;
 
-    //private static final String SECRET_KEY = "your-secret-key-which-is-very-secure";
 
     @PostConstruct
     public void init() {
         this.secretKey = Keys.hmacShaKeyFor(Decoders.BASE64.decode(keyString) );
     }
 
-    public String generateAccessToken(UserDetails userDetails) {
-        return generateToken(userDetails, accessTokenMinutes); // 15 минут
-    }
 
     public String generateAccessToken(String loginName) {
-        return generateAccessTokenFromUsername(loginName, accessTokenMinutes); // 15 минут
+        return generateToken(loginName, accessTokenMinutes); // 15 минут
     }
 
-//    public String generateRefreshToken(UserDetails userDetails) {
-//        return generateToken(userDetails, 7 * 24 * 60); // 7 дней
-//    }
 
-    public String generateToken(UserDetails userDetails, long expirationInMinutes) {
-//        return Jwts.builder()
-//                .subject(userDetails.getUsername())
-//                .issuedAt(new Date())
-//                .expiration(Date.from(Instant.now().plus(expirationInMinutes, ChronoUnit.MINUTES)))
-//                .signWith(secretKey)
-//                .compact();
-        return generateAccessTokenFromUsername(userDetails.getUsername(), expirationInMinutes);
+    public String generateToken(String loginName, long expirationInMinutes) {
+        return Jwts.builder()
+                .subject(loginName)
+                .issuedAt(new Date())
+                .expiration(Date.from(Instant.now().plus(expirationInMinutes, ChronoUnit.MINUTES)))
+                .signWith(secretKey)
+                .compact();
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
@@ -78,14 +70,4 @@ public class JwtService {
         return expiration.before(new Date());
     }
 
-    public String generateAccessTokenFromUsername(String loginName, long expirationInMinutes) {
-
-        return Jwts.builder()
-                .subject(loginName)
-                .issuedAt(new Date())
-                .expiration(Date.from(Instant.now().plus(expirationInMinutes, ChronoUnit.MINUTES)))
-                .signWith(secretKey)
-                .compact();
-
-    }
 }
