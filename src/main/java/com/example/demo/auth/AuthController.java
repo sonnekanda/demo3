@@ -9,6 +9,7 @@ import com.example.demo.models.Benutzer;
 import com.example.demo.models.RefreshToken;
 import com.example.demo.services.BenutzerService;
 import com.example.demo.services.RefreshTokenService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(benutzerDtoRes);
     }
 
+    @Transactional
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest) {
 
@@ -52,7 +54,9 @@ public class AuthController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getLoginName());
         Benutzer benutzer = benutzerService.findByLoginName(authRequest.getLoginName()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         String accessToken = jwtService.generateAccessToken(userDetails);
+        refreshTokenService.deleteByBenutzer(benutzer);
         RefreshToken refreshToken = refreshTokenService.createRefreshToken(benutzer);
+
 
         return ResponseEntity.ok(new AuthResponse(accessToken, refreshToken.getToken()));
     }

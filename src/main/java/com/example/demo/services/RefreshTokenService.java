@@ -51,10 +51,14 @@ public class RefreshTokenService {
         return token;
     }
 
-    public int deleteByBenutzerId(Long benutzerId) {
-        Benutzer benutzer = benutzerService.findById(benutzerId)
-                .orElseThrow(() -> new RuntimeException("Benutzer not found"));
-        return refreshTokenRepository.deleteByBenutzer(benutzer);
+//    public Long deleteByBenutzerId(Long benutzerId) {
+//        Benutzer benutzer = benutzerService.findById(benutzerId)
+//                .orElseThrow(() -> new RuntimeException("Benutzer not found"));
+//        return refreshTokenRepository.deleteByBenutzer(benutzer);
+//    }
+
+    public void deleteByBenutzer(Benutzer benutzer) {
+        refreshTokenRepository.deleteByBenutzer(benutzer);
     }
 
 
