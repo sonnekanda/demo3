@@ -1,6 +1,7 @@
 package com.example.demo.auth;
 
 import com.example.demo.models.Benutzer;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,17 +10,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final BenutzerService benutzerService;
-
-    public UserDetailsServiceImpl(@Lazy BenutzerService benutzerService) {
-        this.benutzerService = benutzerService;
-    }
+    private final BenutzerRepository benutzerRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Benutzer benutzer = benutzerService.findByLoginName(username)
+        Benutzer benutzer = benutzerRepository.findByLoginName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return User.builder()

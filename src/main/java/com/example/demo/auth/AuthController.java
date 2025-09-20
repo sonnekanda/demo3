@@ -1,5 +1,6 @@
 package com.example.demo.auth;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,9 +21,7 @@ public class AuthController {
     public ResponseEntity<BenutzerDtoRes> register(@RequestBody BenutzerDtoReq benutzerDtoReq) {
         System.out.println("register");
         BenutzerDtoRes benutzerDtoRes = benutzerService.save(benutzerDtoReq);
-        return ResponseEntity
-                .ok()
-                .body(benutzerDtoRes);
+        return ResponseEntity.status(HttpStatus.CREATED).body(benutzerDtoRes);
     }
 
 }
