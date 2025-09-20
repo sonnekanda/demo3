@@ -1,8 +1,8 @@
 package com.example.demo.auth;
 
 import com.example.demo.models.Benutzer;
+import com.example.demo.repositories.BenutzerRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

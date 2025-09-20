@@ -1,7 +1,10 @@
-package com.example.demo.auth;
+package com.example.demo.services;
 
+import com.example.demo.dto.BenutzerDtoReq;
+import com.example.demo.dto.BenutzerDtoRes;
 import com.example.demo.mappers.BenutzerMapper;
 import com.example.demo.models.Benutzer;
+import com.example.demo.repositories.BenutzerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,5 +28,10 @@ public class BenutzerService {
 
     public Optional<Benutzer> findByLoginName(String loginName) {
         return benutzerRepository.findByLoginName(loginName);
+    }
+
+    public Optional<Benutzer> findById(Long benutzerId) {
+        return benutzerRepository.findById(benutzerId);
+
     }
 }

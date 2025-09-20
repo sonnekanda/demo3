@@ -1,14 +1,14 @@
-package com.example.demo.auth;
+package com.example.demo.dto;
 
 import com.example.demo.models.Role;
 import lombok.Data;
 
 @Data
-public class BenutzerDtoRes {
-
-    private Long id;
+public class BenutzerDtoReq {
 
     private String loginName;
+
+    private String password;
 
     private Role role;
 

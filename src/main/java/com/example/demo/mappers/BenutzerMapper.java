@@ -1,7 +1,7 @@
 package com.example.demo.mappers;
 
-import com.example.demo.auth.BenutzerDtoReq;
-import com.example.demo.auth.BenutzerDtoRes;
+import com.example.demo.dto.BenutzerDtoReq;
+import com.example.demo.dto.BenutzerDtoRes;
 import com.example.demo.models.Benutzer;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
