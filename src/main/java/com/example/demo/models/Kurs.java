@@ -22,8 +22,11 @@ public class Kurs {
 
     private String name;
 
-    @OneToMany(mappedBy = "kurs")
+    @OneToMany(mappedBy = "kurs", cascade = CascadeType.ALL, orphanRemoval = true )
     private List<Immatrikulation> immatrikulationen = new ArrayList<>();
+
+    @OneToMany(mappedBy = "kurs", cascade = CascadeType.ALL, orphanRemoval = true )
+    private List<Note> noten = new ArrayList<>();
 
     public Kurs(String name) {
         this.name = name;

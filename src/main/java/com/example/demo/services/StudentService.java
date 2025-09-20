@@ -8,6 +8,8 @@ import com.example.demo.exception.InvalidDataException;
 import com.example.demo.mappers.StudentMapper;
 import com.example.demo.models.Student;
 import com.example.demo.repositories.StudentRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,10 +39,30 @@ public class StudentService {
 
     public StudentDtoRes createStudent(StudentDtoReq studentReq) {
 
-        //throw new InvalidDataException("фывфы");
+        //throw new InvalidDataException("Kann throw");
         Student student = studentMapper.toEntity(studentReq);
         Student savedStudent = studentRepository.save(student);
         return studentMapper.toDto(savedStudent);
+
+    }
+
+    public StudentDtoRes updateStudent(Long id, @Valid StudentDtoReq studentDtoReq) {
+
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found"));
+
+        student.setName(studentDtoReq.getName());
+
+        Student saved = studentRepository.save(student);
+        return studentMapper.toDto(saved);
+
+    }
+
+    public void deleteStudent(Long id) {
+
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found with id " + id));
+        studentRepository.delete(student);
 
     }
 }
