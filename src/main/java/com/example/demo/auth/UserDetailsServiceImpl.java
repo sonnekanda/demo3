@@ -1,6 +1,7 @@
 package com.example.demo.auth;
 
 import com.example.demo.models.Benutzer;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,7 +13,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final BenutzerService benutzerService;
 
-    public UserDetailsServiceImpl(BenutzerService benutzerService) {
+    public UserDetailsServiceImpl(@Lazy BenutzerService benutzerService) {
         this.benutzerService = benutzerService;
     }
 

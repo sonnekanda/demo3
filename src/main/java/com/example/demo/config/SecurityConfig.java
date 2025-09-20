@@ -20,11 +20,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final BenutzerService benutzerService;
     private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(BenutzerService benutzerService, UserDetailsService userDetailsService) {
-        this.benutzerService = benutzerService;
+    public SecurityConfig(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -41,11 +39,6 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults()); // простая базовая аутентификация для демонстрации
         return http.build();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService(BenutzerService benutzerService) {
-//        return new UserDetailsServiceImpl(benutzerService);
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
